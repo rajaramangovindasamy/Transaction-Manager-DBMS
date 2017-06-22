@@ -1,0 +1,193 @@
+#
+# Makefile for TX Manager project.  Needs GNU make.
+#
+# Define DEBUGFLAGS for debugging output
+#
+# Warning: make depend overwrites this file.
+
+.PHONY: depend clean backup setup
+
+MAIN=zgt_test
+
+# Change the following line depending on where you have copied and unzipped the files
+#solutions dir should have src, includes, and test-files directories
+#change with your path if you are not using omega.uta.edu
+
+TXMGR=..
+
+#set DIRPATH to the dir from where you use the g++ compiler, change with your path if you are not using omega.uta.edu omega.uta.edu 
+DIRPATH=/usr
+
+CC=$(DIRPATH)/bin/g++
+
+# EXAMPLE: In the next line only TX_DEBUG is enabled
+#DEBUGFLAGS =  -DTX_DEBUG # -DTM_DEBUG -DHT_DEBUG
+
+#Below, all are enabled; you can disable it as you wish
+DEBUGFLAGS = -DTX_DEBUG -DTM_DEBUG -DHT_DEBUG
+
+INCLUDES = -I${TXMGR}/include -I.
+
+LINCLUDES = -L$(DIRPATH)/lib
+
+SRCS = zgt_test.C zgt_tm.C zgt_tx.C zgt_ht.C zgt_semaphore.C zgt_ddlock.C
+
+OBJS = $(SRCS:.C=.o)
+
+$(MAIN):  $(OBJS) Makefile
+	 $(CC) -lpthread $(CFLAGS) $(DEBUGFLAGS) $(INCLUDES) $(OBJS) -o $(MAIN) $(LFLAGS)
+
+.C.o:
+	$(CC) $(CFLAGS) $(INCLUDES) $(LINCLUDES) $(DEBUGFLAGS) -c $<
+
+depend: $(SRCS) Makefile
+	makedepend $(INCLUDES)  $^
+
+clean:
+	rm -f *.o *~ $(MAIN)
+
+# Grab the sources for a user who has only the makefile
+setup:
+	/bin/cp -f $(TXMGR)/src/*.[C] .
+	/bin/cp -f $(TXMGR)/test-files/*.txt .
+	/bin/cp -f $(TXMGR)/includes/*.[h]
+
+# DO NOT DELETE THIS LINE -- make depend needs it
+
+zgt_test.o: /usr/include/stdlib.h /usr/include/features.h
+zgt_test.o: /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h
+zgt_test.o: /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h
+zgt_test.o: /usr/include/sys/types.h /usr/include/bits/types.h
+zgt_test.o: /usr/include/bits/typesizes.h /usr/include/time.h
+zgt_test.o: /usr/include/endian.h /usr/include/bits/endian.h
+zgt_test.o: /usr/include/sys/select.h /usr/include/bits/select.h
+zgt_test.o: /usr/include/bits/sigset.h /usr/include/bits/time.h
+zgt_test.o: /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h
+zgt_test.o: /usr/include/alloca.h /usr/include/string.h /usr/include/ctype.h
+zgt_test.o: /usr/include/sys/signal.h /usr/include/signal.h
+zgt_test.o: /usr/include/bits/signum.h /usr/include/bits/siginfo.h
+zgt_test.o: /usr/include/bits/sigaction.h /usr/include/bits/sigcontext.h
+zgt_test.o: /usr/include/bits/sigstack.h /usr/include/bits/sigthread.h
+zgt_test.o: /usr/include/sys/ipc.h /usr/include/bits/ipctypes.h
+zgt_test.o: /usr/include/bits/ipc.h /usr/include/sys/sem.h
+zgt_test.o: /usr/include/bits/sem.h ../include/zgt_def.h ../include/zgt_tm.h
+zgt_test.o: /usr/include/stdio.h /usr/include/libio.h
+zgt_test.o: /usr/include/_G_config.h /usr/include/wchar.h
+zgt_test.o: /usr/include/bits/wchar.h /usr/include/gconv.h
+zgt_test.o: /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h
+zgt_test.o: ../include/zgt_tx.h /usr/include/pthread.h /usr/include/sched.h
+zgt_test.o: /usr/include/bits/sched.h /usr/include/bits/setjmp.h
+zgt_test.o: ../include/zgt_ddlock.h ../include/zgt_global.h
+zgt_test.o: ../include/zgt_extern.h
+zgt_tm.o: /usr/include/stdio.h /usr/include/features.h
+zgt_tm.o: /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h
+zgt_tm.o: /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h
+zgt_tm.o: /usr/include/bits/types.h /usr/include/bits/typesizes.h
+zgt_tm.o: /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h
+zgt_tm.o: /usr/include/bits/wchar.h /usr/include/gconv.h
+zgt_tm.o: /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h
+zgt_tm.o: /usr/include/stdlib.h /usr/include/sys/types.h /usr/include/time.h
+zgt_tm.o: /usr/include/endian.h /usr/include/bits/endian.h
+zgt_tm.o: /usr/include/sys/select.h /usr/include/bits/select.h
+zgt_tm.o: /usr/include/bits/sigset.h /usr/include/bits/time.h
+zgt_tm.o: /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h
+zgt_tm.o: /usr/include/alloca.h /usr/include/sys/sem.h /usr/include/sys/ipc.h
+zgt_tm.o: /usr/include/bits/ipctypes.h /usr/include/bits/ipc.h
+zgt_tm.o: /usr/include/bits/sem.h ../include/zgt_def.h ../include/zgt_tm.h
+zgt_tm.o: ../include/zgt_tx.h /usr/include/sys/signal.h /usr/include/signal.h
+zgt_tm.o: /usr/include/bits/signum.h /usr/include/bits/siginfo.h
+zgt_tm.o: /usr/include/bits/sigaction.h /usr/include/bits/sigcontext.h
+zgt_tm.o: /usr/include/bits/sigstack.h /usr/include/bits/sigthread.h
+zgt_tm.o: /usr/include/pthread.h /usr/include/sched.h
+zgt_tm.o: /usr/include/bits/sched.h /usr/include/bits/setjmp.h
+zgt_tm.o: ../include/zgt_ddlock.h ../include/zgt_extern.h
+zgt_tx.o: /usr/include/stdio.h /usr/include/features.h
+zgt_tx.o: /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h
+zgt_tx.o: /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h
+zgt_tx.o: /usr/include/bits/types.h /usr/include/bits/typesizes.h
+zgt_tx.o: /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h
+zgt_tx.o: /usr/include/bits/wchar.h /usr/include/gconv.h
+zgt_tx.o: /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h
+zgt_tx.o: /usr/include/stdlib.h /usr/include/sys/types.h /usr/include/time.h
+zgt_tx.o: /usr/include/endian.h /usr/include/bits/endian.h
+zgt_tx.o: /usr/include/sys/select.h /usr/include/bits/select.h
+zgt_tx.o: /usr/include/bits/sigset.h /usr/include/bits/time.h
+zgt_tx.o: /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h
+zgt_tx.o: /usr/include/alloca.h /usr/include/sys/signal.h
+zgt_tx.o: /usr/include/signal.h /usr/include/bits/signum.h
+zgt_tx.o: /usr/include/bits/siginfo.h /usr/include/bits/sigaction.h
+zgt_tx.o: /usr/include/bits/sigcontext.h /usr/include/bits/sigstack.h
+zgt_tx.o: /usr/include/bits/sigthread.h ../include/zgt_def.h
+zgt_tx.o: ../include/zgt_tm.h ../include/zgt_tx.h /usr/include/pthread.h
+zgt_tx.o: /usr/include/sched.h /usr/include/bits/sched.h
+zgt_tx.o: /usr/include/bits/setjmp.h ../include/zgt_ddlock.h
+zgt_tx.o: ../include/zgt_extern.h /usr/include/unistd.h
+zgt_tx.o: /usr/include/bits/posix_opt.h /usr/include/bits/confname.h
+zgt_tx.o: /usr/include/getopt.h
+zgt_ht.o: /usr/include/stdio.h /usr/include/features.h
+zgt_ht.o: /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h
+zgt_ht.o: /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h
+zgt_ht.o: /usr/include/bits/types.h /usr/include/bits/typesizes.h
+zgt_ht.o: /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h
+zgt_ht.o: /usr/include/bits/wchar.h /usr/include/gconv.h
+zgt_ht.o: /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h
+zgt_ht.o: /usr/include/stdlib.h /usr/include/sys/types.h /usr/include/time.h
+zgt_ht.o: /usr/include/endian.h /usr/include/bits/endian.h
+zgt_ht.o: /usr/include/sys/select.h /usr/include/bits/select.h
+zgt_ht.o: /usr/include/bits/sigset.h /usr/include/bits/time.h
+zgt_ht.o: /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h
+zgt_ht.o: /usr/include/alloca.h ../include/zgt_def.h ../include/zgt_tm.h
+zgt_ht.o: ../include/zgt_tx.h /usr/include/sys/signal.h /usr/include/signal.h
+zgt_ht.o: /usr/include/bits/signum.h /usr/include/bits/siginfo.h
+zgt_ht.o: /usr/include/bits/sigaction.h /usr/include/bits/sigcontext.h
+zgt_ht.o: /usr/include/bits/sigstack.h /usr/include/bits/sigthread.h
+zgt_ht.o: /usr/include/pthread.h /usr/include/sched.h
+zgt_ht.o: /usr/include/bits/sched.h /usr/include/bits/setjmp.h
+zgt_ht.o: ../include/zgt_ddlock.h
+zgt_semaphore.o: /usr/include/stdio.h /usr/include/features.h
+zgt_semaphore.o: /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h
+zgt_semaphore.o: /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h
+zgt_semaphore.o: /usr/include/bits/types.h /usr/include/bits/typesizes.h
+zgt_semaphore.o: /usr/include/libio.h /usr/include/_G_config.h
+zgt_semaphore.o: /usr/include/wchar.h /usr/include/bits/wchar.h
+zgt_semaphore.o: /usr/include/gconv.h /usr/include/bits/stdio_lim.h
+zgt_semaphore.o: /usr/include/bits/sys_errlist.h /usr/include/sys/signal.h
+zgt_semaphore.o: /usr/include/signal.h /usr/include/bits/sigset.h
+zgt_semaphore.o: /usr/include/bits/signum.h /usr/include/time.h
+zgt_semaphore.o: /usr/include/bits/siginfo.h /usr/include/bits/sigaction.h
+zgt_semaphore.o: /usr/include/bits/sigcontext.h /usr/include/bits/sigstack.h
+zgt_semaphore.o: /usr/include/bits/pthreadtypes.h
+zgt_semaphore.o: /usr/include/bits/sigthread.h /usr/include/sys/types.h
+zgt_semaphore.o: /usr/include/endian.h /usr/include/bits/endian.h
+zgt_semaphore.o: /usr/include/sys/select.h /usr/include/bits/select.h
+zgt_semaphore.o: /usr/include/bits/time.h /usr/include/sys/sysmacros.h
+zgt_semaphore.o: /usr/include/sys/ipc.h /usr/include/bits/ipctypes.h
+zgt_semaphore.o: /usr/include/bits/ipc.h /usr/include/sys/sem.h
+zgt_semaphore.o: /usr/include/bits/sem.h ../include/zgt_def.h
+zgt_semaphore.o: ../include/zgt_tm.h /usr/include/stdlib.h
+zgt_semaphore.o: /usr/include/alloca.h ../include/zgt_tx.h
+zgt_semaphore.o: /usr/include/pthread.h /usr/include/sched.h
+zgt_semaphore.o: /usr/include/bits/sched.h /usr/include/bits/setjmp.h
+zgt_semaphore.o: ../include/zgt_ddlock.h ../include/zgt_extern.h
+zgt_ddlock.o: ../include/zgt_def.h ../include/zgt_tm.h /usr/include/stdio.h
+zgt_ddlock.o: /usr/include/features.h /usr/include/sys/cdefs.h
+zgt_ddlock.o: /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h
+zgt_ddlock.o: /usr/include/gnu/stubs-64.h /usr/include/bits/types.h
+zgt_ddlock.o: /usr/include/bits/typesizes.h /usr/include/libio.h
+zgt_ddlock.o: /usr/include/_G_config.h /usr/include/wchar.h
+zgt_ddlock.o: /usr/include/bits/wchar.h /usr/include/gconv.h
+zgt_ddlock.o: /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h
+zgt_ddlock.o: /usr/include/stdlib.h /usr/include/sys/types.h
+zgt_ddlock.o: /usr/include/time.h /usr/include/endian.h
+zgt_ddlock.o: /usr/include/bits/endian.h /usr/include/sys/select.h
+zgt_ddlock.o: /usr/include/bits/select.h /usr/include/bits/sigset.h
+zgt_ddlock.o: /usr/include/bits/time.h /usr/include/sys/sysmacros.h
+zgt_ddlock.o: /usr/include/bits/pthreadtypes.h /usr/include/alloca.h
+zgt_ddlock.o: ../include/zgt_tx.h /usr/include/sys/signal.h
+zgt_ddlock.o: /usr/include/signal.h /usr/include/bits/signum.h
+zgt_ddlock.o: /usr/include/bits/siginfo.h /usr/include/bits/sigaction.h
+zgt_ddlock.o: /usr/include/bits/sigcontext.h /usr/include/bits/sigstack.h
+zgt_ddlock.o: /usr/include/bits/sigthread.h /usr/include/pthread.h
+zgt_ddlock.o: /usr/include/sched.h /usr/include/bits/sched.h
+zgt_ddlock.o: /usr/include/bits/setjmp.h ../include/zgt_ddlock.h
+zgt_ddlock.o: ../include/zgt_extern.h
